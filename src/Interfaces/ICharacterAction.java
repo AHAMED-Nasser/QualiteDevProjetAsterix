@@ -1,12 +1,12 @@
 package src.Interfaces;
 
-import src.AbstractClass.AbstractPlayer;
+import src.Characters.Character;
 
 public interface ICharacterAction {
-    void fight(AbstractPlayer opponent);
+//    void fight(Character opponent);
     void takeDamage(int damage);
     void heal(int amount);
-    void eat();
-    void drinkMagicPotion();
-    void checkDeath();
+    void eat(int hungerAmount);
+    void drinkMagicPotion(int potionAmount);
+    boolean isDead();
 }
