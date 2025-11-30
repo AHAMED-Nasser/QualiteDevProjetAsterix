@@ -17,6 +17,6 @@ public class Game {
         System.out.println(druide.getName());
         System.out.println(forgeron.getName());
 
-        forgeron.takeDamage(5);
+        forgeron.takeDamage(5); // Pas d'affichage
     }
 }
