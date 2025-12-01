@@ -11,7 +11,9 @@ public class Druid extends Character implements Worker, Leader, Fighter {
     }
 
     @Override
-    public void work() {}
+    public void work() {
+        System.out.println(this.getName() + " est en train de travailler.");
+    }
 
     @Override
     public void lead(Character character) {

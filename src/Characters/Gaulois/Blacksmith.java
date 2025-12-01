@@ -9,6 +9,8 @@ public class Blacksmith extends Character implements Worker {
     }
 
     @Override
-    public void work() {}
+    public void work() {
+        System.out.println(this.getName() + " est en train de travailler.");
+    }
 
 }
