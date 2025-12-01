@@ -1,8 +1,9 @@
-package src.Characters;
+package src.Characters.Gaulois;
 
-import src.Interfaces.Worker;
+import src.Characters.Character;
+import src.Interfaces.IWorker;
 
-public class Merchant extends Character implements Worker {
+public class Merchant extends Character implements IWorker {
 
     public Merchant(String name, char sex, int height, int age, int strength, int stamina) {
         super(name, sex, height, age, strength, stamina);
@@ -10,6 +11,6 @@ public class Merchant extends Character implements Worker {
 
     @Override
     public void work() {
-        System.out.println(this.getName() + " est en train de travailler.");
+        System.out.println("[Marchand] " + this.getName() + " est en train de travailler.");
     }
 }

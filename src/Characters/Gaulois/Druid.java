@@ -1,10 +1,11 @@
-package src.Characters;
+package src.Characters.Gaulois;
 
-import src.Interfaces.Fighter;
-import src.Interfaces.Leader;
-import src.Interfaces.Worker;
+import src.Characters.Character;
+import src.Interfaces.IFighter;
+import src.Interfaces.ILeader;
+import src.Interfaces.IWorker;
 
-public class Druid extends Character implements Worker, Leader, Fighter {
+public class Druid extends src.Characters.Character implements IWorker, ILeader, IFighter {
 
     public Druid(String name, char sex, int height, int age, int strength, int stamina) {
         super(name, sex, height, age, strength, stamina);
@@ -12,16 +13,16 @@ public class Druid extends Character implements Worker, Leader, Fighter {
 
     @Override
     public void work() {
-        System.out.println(this.getName() + " est en train de travailler.");
+        System.out.println("[Druide] " + this.getName() + " est en train de travailler.");
     }
 
     @Override
-    public void lead(Character character) {
-        System.out.println(this.getName() + " donne un ordre à " + character.getName());
+    public void lead(src.Characters.Character character) {
+        System.out.println("[Druide] " + this.getName() + " donne un ordre à " + character.getName());
     }
 
     @Override
     public void fight(Character character) {
-        System.out.println(this.getName() + " se battre contre " + character.getName());
+        System.out.println("[Druide] " + this.getName() + " se battre contre " + character.getName());
     }
 }

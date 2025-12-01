@@ -1,8 +1,9 @@
-package src.Characters;
+package src.Characters.Gaulois;
 
-import src.Interfaces.Worker;
+import src.Characters.Character;
+import src.Interfaces.IWorker;
 
-public class Blacksmith extends Character implements Worker {
+public class Blacksmith extends Character implements IWorker {
 
     public Blacksmith(String name, char sex, int height, int age, int strength, int stamina) {
         super(name, sex, height, age, strength, stamina);
@@ -10,7 +11,7 @@ public class Blacksmith extends Character implements Worker {
 
     @Override
     public void work() {
-        System.out.println(this.getName() + " est en train de travailler.");
+        System.out.println("[Forgeron] " + this.getName() + " est en train de travailler.");
     }
 
 }
