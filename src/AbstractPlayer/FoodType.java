@@ -1,6 +1,6 @@
 package src.AbstractPlayer;
-
 import src.AbstractPlayer.FoodCategory;
+import javax.xml.namespace.QName;
 
 public enum FoodType {
     SANGLIER("Sanglier", FoodCategory.MEAT, true),

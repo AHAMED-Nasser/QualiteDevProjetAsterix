@@ -1,5 +1,10 @@
 package src.AbstractPlayer;
 
 public enum FoodCategory {
-    MEAT, FISH, MAGIC, DRINK, OTHER, VEGETABLE;
+    MEAT,
+    FISH,
+    MAGIC,
+    DRINK,
+    OTHER,
+    VEGETABLE;
 }
