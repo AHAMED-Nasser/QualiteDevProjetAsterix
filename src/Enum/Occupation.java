@@ -7,5 +7,6 @@ public enum Occupation {
     GENERAL,
     AUBERGISTE,
     MARCHAND,
-    PREFET
+    PREFET,
+    LYCANTHROPE
 }
