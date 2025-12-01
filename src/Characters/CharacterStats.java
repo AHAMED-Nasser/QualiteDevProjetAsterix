@@ -6,9 +6,10 @@ public class CharacterStats {
     private int max;
 
     public CharacterStats(int value, int min, int max) {
-        this.value = this.clamp(value);
+        this.value = value;
         this.min = min;
         this.max = max;
+        this.value = clamp(this.value);
     }
 
     public int clamp(int value) {
