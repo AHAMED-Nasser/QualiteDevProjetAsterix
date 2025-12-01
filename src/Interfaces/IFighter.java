@@ -2,6 +2,6 @@ package src.Interfaces;
 
 import src.Characters.Character;
 
-public interface Fighter {
+public interface IFighter {
     void fight(Character character);
 }

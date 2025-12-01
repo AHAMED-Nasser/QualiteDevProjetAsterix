@@ -1,5 +1,5 @@
 package src.Interfaces;
 
-public interface Worker {
+public interface IWorker {
     void work();
 }
