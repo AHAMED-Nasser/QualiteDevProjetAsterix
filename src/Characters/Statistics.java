@@ -1,11 +1,11 @@
 package src.Characters;
 
-public class CharacterStats {
+public class Statistics {
     private int value;
     private final int min;
     private int max;
 
-    public CharacterStats(int value, int min, int max) {
+    public Statistics(int value, int min, int max) {
         this.value = value;
         this.min = min;
         this.max = max;
