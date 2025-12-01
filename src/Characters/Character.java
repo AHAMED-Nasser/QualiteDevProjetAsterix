@@ -38,7 +38,7 @@ public abstract class Character implements ICharacterAction {
     public CharacterStats getHealth() { return this.health; }
     public CharacterStats getHunger() { return this.hunger; }
     public CharacterStats getBelligerence() { return this.belligerence; }
-    public CharacterStats getLevelMagicPotion() { return this.magicPotion; }
+    public CharacterStats getMagicPotion() { return this.magicPotion; }
 
     //--- Setters ---
     protected void setHealth(CharacterStats health) { this.health = health; }
@@ -51,7 +51,7 @@ public abstract class Character implements ICharacterAction {
 
         this.health.add(-damage);
 
-        System.out.println(this.name + " a subit " + damage + " point de dégâts. Santé restante : " + this.health.get());
+        System.out.println(this.name + " a subit " + damage + " point de dégâts. Santé restant : " + this.health.get());
 
         isDead(); // Verify if the player die after the fight
     }
