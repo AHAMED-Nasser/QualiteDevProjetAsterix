@@ -1,8 +1,9 @@
-package src.Characters;
+package src.Characters.Romain;
 
-import src.Interfaces.Fighter;
+import src.Characters.Character;
+import src.Interfaces.IFighter;
 
-public class Lycanthrope extends Character implements Fighter {
+public class Lycanthrope extends src.Characters.Character implements IFighter {
 
     public Lycanthrope(String name, char sex, int height, int age, int strength, int stamina) {
         super(name, sex, height, age, strength, stamina);
@@ -14,6 +15,6 @@ public class Lycanthrope extends Character implements Fighter {
             System.out.println("Pourquoi je me bat contre moi-même ?");
             return;
         }
-        System.out.println(this.getName() + " se bat contre " + character.getName());
+        System.out.println("[Lycanthrop] " + this.getName() + " se bat contre " + character.getName());
     }
 }

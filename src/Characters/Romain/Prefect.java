@@ -1,8 +1,9 @@
-package src.Characters;
+package src.Characters.Romain;
 
-import src.Interfaces.Leader;
+import src.Characters.Character;
+import src.Interfaces.ILeader;
 
-public class Prefect extends Character implements Leader {
+public class Prefect extends src.Characters.Character implements ILeader {
 
     public Prefect(String name, char sex, int height, int age, int strength, int stamina) {
         super(name, sex, height, age, strength, stamina);
@@ -10,6 +11,6 @@ public class Prefect extends Character implements Leader {
 
     @Override
     public void lead(Character character) {
-        System.out.println(this.getName() + " donne un ordre à " + character.getName());
+        System.out.println("[Prefet] " + this.getName() + " donne un ordre à " + character.getName());
     }
 }
