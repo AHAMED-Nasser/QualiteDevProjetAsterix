@@ -1,5 +1,6 @@
 import src.Characters.Character;
 import src.Characters.CharacterFactory;
+import src.Characters.Gaulois.Druid;
 import src.Enum.Faction;
 import src.Enum.Occupation;
 import src.Interfaces.IFighter;
@@ -23,17 +24,22 @@ public class Game {
 
         System.out.println("--- Début de la simulation ---");
 
-        ((IWorker) druide).work();
-        ((IWorker) forgeron).work();
-        ((IWorker) marchand).work();
-        ((IWorker) aubergiste).work();
+//        ((IWorker) druide).work();
+//        ((IWorker) forgeron).work();
+//        ((IWorker) marchand).work();
+//        ((IWorker) aubergiste).work();
+//
+//        ((IFighter) legionnaire).fight(druide);
+//
+//        ((ILeader) prefet).lead(legionnaire);
+//        ((IFighter) general).fight(forgeron);
+//        ((ILeader) general).lead(legionnaire);
+//
+//        ((IFighter) lycanthrop).fight(druide);
 
-        ((IFighter) legionnaire).fight(druide);
-
-        ((ILeader) prefet).lead(legionnaire);
-        ((IFighter) general).fight(forgeron);
-        ((ILeader) general).lead(legionnaire);
-
-        ((IFighter) lycanthrop).fight(druide);
+        ((Druid) druide).createMagicPotion();
+        System.out.println(((Druid) druide).hasMagicPotionBottle());
+        System.out.println(((Druid) druide).hasMagicPotionCauldron());
     }
+
 }
