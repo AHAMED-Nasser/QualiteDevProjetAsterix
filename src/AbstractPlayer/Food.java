@@ -12,9 +12,7 @@ public class Food extends AbstractFood {
     @Override
     public boolean isDangerous() {
         // règle : poisson pas frais = dangereux
-        if (type == FoodType.POISSON_PAS_FRAIS) return true;
-
-        return false;
+        return type == FoodType.POISSON_PAS_FRAIS; // Si pas frais  retourne true voir FoodType
     }
 
     public FoodCategory getCategory() {
