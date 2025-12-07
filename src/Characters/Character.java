@@ -1,6 +1,7 @@
 package src.Characters;
 
 import src.Interfaces.ICharacterAction;
+import src.Statistics;
 
 public abstract class Character implements ICharacterAction {
 
