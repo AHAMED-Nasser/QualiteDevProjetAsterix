@@ -1,7 +1,6 @@
 package src.Characters;
 
 import src.Interfaces.ICharacterAction;
-import src.Characters.CharacterStats;
 
 public abstract class Character implements ICharacterAction {
 
@@ -14,10 +13,11 @@ public abstract class Character implements ICharacterAction {
     private int stamina;
 
     // Fight stats
-    private CharacterStats health = new CharacterStats(100, 0, 100); // 0 = death, 100 = top form
-    private CharacterStats hunger = new CharacterStats(100, 0, 100); // 0 = hungry, 100 = satiated
-    private CharacterStats belligerence = new CharacterStats(100, 0, 100); // 0 = pacific, 100 = aggressive
-    private CharacterStats magicPotion = new CharacterStats(0, 0, 100);
+    private Statistics health = new Statistics(100, 0, 100); // 0 = death, 100 = top form
+    private Statistics hunger = new Statistics(100, 0, 100); // 0 = hungry, 100 = satiated
+    private Statistics belligerence = new Statistics(100, 0, 100); // 0 = pacific, 100 = aggressive
+    private Statistics magicPotion = new Statistics(0, 0, 100);
+
 
     public Character(String name, char sex, int height, int age, int strength, int stamina) {
         this.name = name;
@@ -35,15 +35,15 @@ public abstract class Character implements ICharacterAction {
     public int getAge() { return this.age; }
     public int getStrength() { return this.strength; }
     public int getStamina() { return this.stamina; }
-    public CharacterStats getHealth() { return this.health; }
-    public CharacterStats getHunger() { return this.hunger; }
-    public CharacterStats getBelligerence() { return this.belligerence; }
-    public CharacterStats getMagicPotion() { return this.magicPotion; }
+    public Statistics getHealth() { return this.health; }
+    public Statistics getHunger() { return this.hunger; }
+    public Statistics getBelligerence() { return this.belligerence; }
+    public Statistics getMagicPotion() { return this.magicPotion; }
 
     //--- Setters ---
-    protected void setHealth(CharacterStats health) { this.health = health; }
-    protected void setHunger(CharacterStats hunger) { this.hunger = hunger; }
-    protected void setMagicPotion(CharacterStats magicPotion) { this.magicPotion = magicPotion; }
+    protected void setHealth(Statistics health) { this.health = health; }
+    protected void setHunger(Statistics hunger) { this.hunger = hunger; }
+    protected void setMagicPotion(Statistics magicPotion) { this.magicPotion = magicPotion; }
 
     @Override
     public void takeDamage(int damage) {

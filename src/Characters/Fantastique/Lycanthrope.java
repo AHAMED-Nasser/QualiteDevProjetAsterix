@@ -1,4 +1,4 @@
-package src.Characters.Romain;
+package src.Characters.Fantastique;
 
 import src.Characters.Character;
 import src.Interfaces.IFighter;

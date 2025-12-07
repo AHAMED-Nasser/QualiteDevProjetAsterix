@@ -6,7 +6,7 @@ import src.Characters.Gaulois.Innkeeper;
 import src.Characters.Gaulois.Merchant;
 import src.Characters.Romain.General;
 import src.Characters.Romain.Legionnaire;
-import src.Characters.Romain.Lycanthrope;
+import src.Characters.Fantastique.Lycanthrope;
 import src.Characters.Romain.Prefect;
 import src.Enum.Faction;
 import src.Enum.Occupation;
