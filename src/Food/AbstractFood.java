@@ -1,4 +1,5 @@
 package src.Food;
 
-public class AbstractFood {
+public abstract class AbstractFood {
+
 }
