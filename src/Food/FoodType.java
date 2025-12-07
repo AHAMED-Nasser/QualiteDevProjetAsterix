@@ -7,7 +7,7 @@ public enum FoodType {
     LOBSTER, // Homard
     STRAWBERRY, // Fraise
     CARROT, // Carrotte
-    SEL, // Salt
+    SALT, // Salt
     FOUR_LEAF_CLOVER, // Trèfle à 4 feuille
     ROCK_OIL, // Huile de roche
     BEET_JUICE, // Jus de betterave
