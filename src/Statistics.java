@@ -1,4 +1,4 @@
-package src.Characters;
+package src;
 
 public class Statistics {
     private int value;
