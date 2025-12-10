@@ -1,4 +1,4 @@
-package src.Interfaces;
+package src.Interfaces.Character;
 
 import src.Characters.Character;
 

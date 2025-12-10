@@ -2,8 +2,8 @@ package src.Characters.Romain;
 
 import src.Characters.Character;
 import src.Enum.Character.Faction;
-import src.Interfaces.IFighter;
-import src.Interfaces.ILeader;
+import src.Interfaces.Character.IFighter;
+import src.Interfaces.Character.ILeader;
 
 public class General extends src.Characters.Character implements IFighter, ILeader {
 

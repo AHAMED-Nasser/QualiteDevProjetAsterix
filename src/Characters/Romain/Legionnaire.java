@@ -2,7 +2,7 @@ package src.Characters.Romain;
 
 import src.Characters.Character;
 import src.Enum.Character.Faction;
-import src.Interfaces.IFighter;
+import src.Interfaces.Character.IFighter;
 
 public class Legionnaire extends src.Characters.Character implements IFighter {
 

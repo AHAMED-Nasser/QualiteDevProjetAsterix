@@ -1,6 +1,5 @@
-package src.Interfaces;
+package src.Interfaces.Character;
 
-import src.Characters.Character;
 import src.Food.Food;
 
 public interface ICharacterAction {

@@ -2,9 +2,9 @@ package src.Characters.Gaulois;
 
 import src.Characters.Character;
 import src.Enum.Character.Faction;
-import src.Interfaces.IFighter;
-import src.Interfaces.ILeader;
-import src.Interfaces.IWorker;
+import src.Interfaces.Character.IFighter;
+import src.Interfaces.Character.ILeader;
+import src.Interfaces.Character.IWorker;
 
 public class Druid extends src.Characters.Character implements IWorker, ILeader, IFighter {
 

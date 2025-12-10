@@ -2,8 +2,8 @@ package src.Place;
 
 import src.Characters.Character;
 import src.Food.Food;
-import src.Place.Enum.TypePlace;
-import src.Place.Interface.ISafePlace;
+import src.Enum.Place.TypePlace;
+import src.Interfaces.Place.ISafePlace;
 import src.Statistics;
 
 import java.util.List;

@@ -7,11 +7,7 @@ import src.Enum.Character.Occupation;
 import src.Food.Food;
 import src.Food.FoodFactory;
 import src.Enum.Food.FoodType;
-import src.Interfaces.IFighter;
-import src.Interfaces.ILeader;
-import src.Interfaces.IWorker;
-import src.Place.Enum.TypePlace;
-import src.Place.Place;
+import src.Enum.Place.TypePlace;
 import src.Place.PlaceFactory;
 import src.Place.SafePlace;
 
