@@ -53,6 +53,8 @@ public class CharacterFactory {
                 strength += 30;
                 stamina += 10;
                 return new Lycanthrope(name, sex, height, age, strength, stamina, faction);
+            case CLAN_CHIEF:
+                return new ClanChief(name, sex, 0, age, 0, 0, faction);
             default:
                 throw new IllegalArgumentException("Métier inconnu: " + occupation);
         }
