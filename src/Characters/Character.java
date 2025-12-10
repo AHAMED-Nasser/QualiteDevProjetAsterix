@@ -141,5 +141,17 @@ public abstract class Character implements ICharacterAction {
         return this.health.get() <= 0;
     }
 
-
+    @Override
+    public void displayInformation() {
+        System.out.println("<-------- Information de " + this.getName() +" -------->");
+        System.out.println("Nom: " + this.name + " | Age: " + this.age + " | " + this.sex);
+        System.out.println("Faction: " + this.faction);
+        System.out.println("Force: " + this.strength);
+        System.out.println("Endurance: " + this.stamina);
+        System.out.println("Point de vie: " + this.health.get() + "/" + this.health.getMax());
+        System.out.println("Niveau de faim: " + this.hunger.get() + "/" + this.hunger.getMax());
+        System.out.println("Belligérance: " + this.belligerence.get() + "/" + this.belligerence.getMax());
+        System.out.println("Niveau de potion magique: " + this.magicPotion.get() + "/" + this.magicPotion.getMax());
+        System.out.println("<----------------------------------------->");
+    }
 }
