@@ -10,5 +10,6 @@ public interface ICharacterAction {
     void eat(Food food);
     void drinkMagicPotion(int potionAmount);
     boolean isDead();
-    void displayInformation();
+    void displayFullInformation();
+    void displayMinInformation();
 }
