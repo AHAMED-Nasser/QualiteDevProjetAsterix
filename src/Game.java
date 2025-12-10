@@ -10,6 +10,10 @@ import src.Enum.Food.FoodType;
 import src.Interfaces.IFighter;
 import src.Interfaces.ILeader;
 import src.Interfaces.IWorker;
+import src.Place.Enum.TypePlace;
+import src.Place.Place;
+import src.Place.PlaceFactory;
+import src.Place.SafePlace;
 
 public class Game {
 
@@ -26,6 +30,8 @@ public class Game {
         Character var8 = var1.createCharacter(Faction.ROMAN, Occupation.GENERAL, "Jules César");
         Character var9 = var1.createCharacter(Faction.FANTASTIC_CREATURE, Occupation.LYCANTHROPE, "Prolix");
 
+        Character chef_clan = var1.createCharacter(Faction.GAULS, Occupation.CLAN_CHIEF, "Nasser");
+
         // Food
         FoodFactory foodFactory = new FoodFactory();
 
@@ -33,12 +39,25 @@ public class Game {
         Food poisson_pas_frais = foodFactory.createFood(FoodType.NOT_FRESH_FISH);
         Food fraise = foodFactory.createFood(FoodType.STRAWBERRY);
 
+        // PLACE
+
+        PlaceFactory placeFactory = new PlaceFactory();
+
+        SafePlace pydertale = placeFactory.createSafePlace("Pydertale", TypePlace.GAULS_VILLAGE, chef_clan);
+
         System.out.println("--- Début de la simulation ---");
 
-        var2.displayInformation();
-        var2.takeDamage(50);
-        var2.eat(fraise);
-        var2.eat(fraise);
-        var2.displayInformation();
+        pydertale.addCharacter(var2);
+        pydertale.addCharacter(var3);
+
+        pydertale.displayCharacterMinInfo();
+
+        var2.setHunger(new Statistics(50, 0, 100));
+
+        pydertale.displayCharacterMinInfo();
+
+        pydertale.feedOneCharacters(var2);
+
+        pydertale.displayCharacterMinInfo();
     }
 }
