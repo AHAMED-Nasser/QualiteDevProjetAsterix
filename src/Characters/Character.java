@@ -97,26 +97,26 @@ public abstract class Character implements ICharacterAction {
         int pv_win = 0;
 
         if (food.getFoodCategory() == FoodCategory.VEGETABLE) {
-            hunger_win = food.getFoodNutrition() - (food.getFoodNutrition() / 2);
+            hunger_win = food.getFoodNutrition() / 2;
             pv_win = food.getFoodNutrition();
             if (nb_vegetables >= 2) nb_vegetables = 0;
             nb_vegetables++;
         }
 
-        if (food.getFoodFreshness() == FoodFreshness.NOT_FRESH) {
+        if (food.getFoodFreshness() == FoodFreshness.NOT_FRESH) { // Si nourriture pas frais
             int hunger_lost_point = food.getFoodNutrition();
-            int pv_lost = food.getFoodNutrition() - (food.getFoodNutrition() / 2);
+            int pv_lost = food.getFoodNutrition() / 2; // on perd
             System.out.println(this.name + " à mangé " + food.getName() + "." + hunger_lost_point + " points de faim et " + pv_lost + " points de vie.");
             this.hunger.add(hunger_lost_point); // On retire la valeur de la nutrition mais pas trop
             this.takeDamage(pv_lost); // On pert des pv
-        } else if (nb_vegetables >= 2) {
+        } else if (nb_vegetables >= 2) { // si plus de deux végétaux consommé
             int hunger_lost_point = -40;
             int pv_lost = food.getFoodNutrition() - (food.getFoodNutrition() / 2);
             System.out.println(this.name + " à mangé deux végétaux consecutivement." + hunger_lost_point + " points de faim et +" + pv_lost + " points de vie.");
             this.hunger.add(hunger_lost_point);
             this.takeDamage(pv_lost);
             System.out.println("Aaah... je ne me sens pas bien...");
-        } else {
+        } else { // Sinon on prend des pv et point de faim
             if (this.faction == Faction.GAULS && gaulsFoods.contains(food.getFoodType())) {
                 hunger_win = food.getFoodNutrition();
             } else if (this.faction == Faction.ROMAN && romanFoods.contains(food.getFoodType())) {
