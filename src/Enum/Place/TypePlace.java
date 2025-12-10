@@ -1,4 +1,4 @@
-package src.Place.Enum;
+package src.Enum.Place;
 
 public enum TypePlace {
     GAULS_VILLAGE, // Village gaulois

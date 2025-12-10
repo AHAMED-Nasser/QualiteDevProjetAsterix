@@ -1,7 +1,7 @@
 package src.Place;
 
 import src.Characters.Character;
-import src.Place.Enum.TypePlace;
+import src.Enum.Place.TypePlace;
 import src.Food.Food;
 
 import java.util.ArrayList;

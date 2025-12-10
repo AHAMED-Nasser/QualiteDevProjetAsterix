@@ -2,7 +2,7 @@ package src.Characters.Gaulois;
 
 import src.Characters.Character;
 import src.Enum.Character.Faction;
-import src.Interfaces.IWorker;
+import src.Interfaces.Character.IWorker;
 
 public class Merchant extends Character implements IWorker {
 

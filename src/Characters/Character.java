@@ -5,7 +5,7 @@ import src.Enum.Food.FoodCategory;
 import src.Enum.Food.FoodFreshness;
 import src.Enum.Food.FoodType;
 import src.Food.Food;
-import src.Interfaces.ICharacterAction;
+import src.Interfaces.Character.ICharacterAction;
 import src.Statistics;
 
 import java.util.ArrayList;

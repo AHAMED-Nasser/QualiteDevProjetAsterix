@@ -1,4 +1,4 @@
-package src.Place.Interface;
+package src.Interfaces.Place;
 
 import src.Food.Food;
 import src.Characters.Character;

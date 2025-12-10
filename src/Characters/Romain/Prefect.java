@@ -2,7 +2,7 @@ package src.Characters.Romain;
 
 import src.Characters.Character;
 import src.Enum.Character.Faction;
-import src.Interfaces.ILeader;
+import src.Interfaces.Character.ILeader;
 
 public class Prefect extends src.Characters.Character implements ILeader {
 

@@ -1,9 +1,7 @@
 package src.Characters;
 
 import src.Enum.Character.Faction;
-import src.Food.Food;
-import src.Interfaces.IClanChief;
-import src.Characters.Character;
+import src.Interfaces.Character.IClanChief;
 
 public class ClanChief extends Character implements IClanChief {
 
