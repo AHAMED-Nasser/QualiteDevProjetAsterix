@@ -8,8 +8,8 @@ import src.Characters.Romain.General;
 import src.Characters.Romain.Legionnaire;
 import src.Characters.Fantastique.Lycanthrope;
 import src.Characters.Romain.Prefect;
-import src.Enum.Faction;
-import src.Enum.Occupation;
+import src.Enum.Character.Faction;
+import src.Enum.Character.Occupation;
 
 import java.util.Random;
 
@@ -26,33 +26,33 @@ public class CharacterFactory {
         switch (occupation) {
             case FORGERON:
                 strength += 30;
-                return new Blacksmith(name, sex, height, age, strength, stamina);
+                return new Blacksmith(name, sex, height, age, strength, stamina, faction);
             case DRUID:
                 stamina += 30;
-                return new Druid(name, sex, height, age, strength, stamina);
+                return new Druid(name, sex, height, age, strength, stamina, faction);
             case MARCHAND:
                 strength += 5;
                 stamina += 5;
-                return new Merchant(name, sex, height, age, strength, stamina);
+                return new Merchant(name, sex, height, age, strength, stamina, faction);
             case AUBERGISTE:
                 stamina += 25;
-                return new Innkeeper(name, sex, height, age, strength, stamina);
+                return new Innkeeper(name, sex, height, age, strength, stamina, faction);
             case LEGIONNAIRE:
                 strength += 10;
                 stamina += 15;
-                return new Legionnaire(name, sex, height, age, strength, stamina);
+                return new Legionnaire(name, sex, height, age, strength, stamina, faction);
             case PREFET:
                 strength += 10;
                 stamina += 10;
-                return new Prefect(name, sex, height, age, strength, stamina);
+                return new Prefect(name, sex, height, age, strength, stamina, faction);
             case GENERAL:
                 strength += 15;
                 stamina += 15;
-                return new General(name, sex, height, age, strength, stamina);
+                return new General(name, sex, height, age, strength, stamina, faction);
             case LYCANTHROPE:
                 strength += 30;
                 stamina += 10;
-                return new Lycanthrope(name, sex, height, age, strength, stamina);
+                return new Lycanthrope(name, sex, height, age, strength, stamina, faction);
             default:
                 throw new IllegalArgumentException("Métier inconnu: " + occupation);
         }
