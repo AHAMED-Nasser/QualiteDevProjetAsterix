@@ -35,6 +35,10 @@ public class Game {
 
         System.out.println("--- Début de la simulation ---");
 
-
+        var2.displayInformation();
+        var2.takeDamage(50);
+        var2.eat(fraise);
+        var2.eat(fraise);
+        var2.displayInformation();
     }
 }
