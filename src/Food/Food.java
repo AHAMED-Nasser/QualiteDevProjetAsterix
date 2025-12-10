@@ -9,7 +9,7 @@ public class Food {
     private FoodType foodType;
     private FoodFreshness foodFreshness;
 
-    public Food(String name, int foodNutrition, FoodType foodType, FoodFreshness foodFreshness) {
+    public Food(String name, int foodNutrition, FoodType foodType, FoodFreshness foodFreshness, FoodCategorie foodCategory) {
         this.name = name;
         this.foodNutrition = foodNutrition;
         this.foodType = foodType;
