@@ -1,7 +1,15 @@
 package src.Characters;
 
+import src.Enum.Character.Faction;
+import src.Enum.Food.FoodCategory;
+import src.Enum.Food.FoodFreshness;
+import src.Enum.Food.FoodType;
+import src.Food.Food;
 import src.Interfaces.ICharacterAction;
 import src.Statistics;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Character implements ICharacterAction {
 
@@ -12,6 +20,7 @@ public abstract class Character implements ICharacterAction {
     private int age;
     private int strength;
     private int stamina;
+    private Faction faction;
 
     // Fight stats
     private Statistics health = new Statistics(100, 0, 100); // 0 = death, 100 = top form
@@ -19,14 +28,26 @@ public abstract class Character implements ICharacterAction {
     private Statistics belligerence = new Statistics(100, 0, 100); // 0 = pacific, 100 = aggressive
     private Statistics magicPotion = new Statistics(0, 0, 100);
 
+    private final List<FoodType> gaulsFoods = new ArrayList<>();
+    private final List<FoodType> romanFoods = new ArrayList<>();
 
-    public Character(String name, char sex, int height, int age, int strength, int stamina) {
+    public Character(String name, char sex, int height, int age, int strength, int stamina, Faction faction) {
         this.name = name;
         this.sex = sex;
         this.height = height;
         this.age = age;
         this.strength = strength;
         this.stamina = stamina;
+        this.faction = faction;
+
+        gaulsFoods.add(FoodType.WILD_BOAR);
+        gaulsFoods.add(FoodType.WINE);
+        gaulsFoods.add(FoodType.FAIRLY_FRESH_FISH);
+
+        romanFoods.add(FoodType.WILD_BOAR);
+        romanFoods.add(FoodType.HONEY);
+        romanFoods.add(FoodType.WINE);
+        romanFoods.add(FoodType.MEAD);
     }
 
     //--- Getters ---
@@ -40,6 +61,7 @@ public abstract class Character implements ICharacterAction {
     public Statistics getHunger() { return this.hunger; }
     public Statistics getBelligerence() { return this.belligerence; }
     public Statistics getMagicPotion() { return this.magicPotion; }
+    public Faction getFaction() { return this.faction; }
 
     //--- Setters ---
     protected void setHealth(Statistics health) { this.health = health; }
@@ -63,16 +85,47 @@ public abstract class Character implements ICharacterAction {
 
         this.health.add(amount);
 
-        System.out.println(this.name + " se soigne de " + amount + " points. Santé actuelle : " + this.health);
+        System.out.println(this.name + " se soigne de " + amount + " points. Santé actuelle : " + this.health.get());
     }
 
+    private int nb_vegetables = 0; // Nombre de végétaux mangé
     @Override
-    public void eat(int hungerAmount) {
+    public void eat(Food food) {
         if (this.isDead()) return;
 
-        this.hunger.add(hungerAmount);
+        int hunger_win = 0;
+        int pv_win = 0;
 
-        System.out.println(this.name + " mange. Faim actuelle : " + this.hunger.get());
+        if (food.getFoodCategory() == FoodCategory.VEGETABLE) {
+            hunger_win = food.getFoodNutrition() - (food.getFoodNutrition() / 2);
+            pv_win = food.getFoodNutrition();
+            if (nb_vegetables >= 2) nb_vegetables = 0;
+            nb_vegetables++;
+        }
+
+        if (food.getFoodFreshness() == FoodFreshness.NOT_FRESH) {
+            int hunger_lost_point = food.getFoodNutrition();
+            int pv_lost = food.getFoodNutrition() - (food.getFoodNutrition() / 2);
+            System.out.println(this.name + " à mangé " + food.getName() + "." + hunger_lost_point + " points de faim et " + pv_lost + " points de vie.");
+            this.hunger.add(hunger_lost_point); // On retire la valeur de la nutrition mais pas trop
+            this.takeDamage(pv_lost); // On pert des pv
+        } else if (nb_vegetables >= 2) {
+            int hunger_lost_point = -40;
+            int pv_lost = food.getFoodNutrition() - (food.getFoodNutrition() / 2);
+            System.out.println(this.name + " à mangé deux végétaux consecutivement." + hunger_lost_point + " points de faim et +" + pv_lost + " points de vie.");
+            this.hunger.add(hunger_lost_point);
+            this.takeDamage(pv_lost);
+            System.out.println("Aaah... je ne me sens pas bien...");
+        } else {
+            if (this.faction == Faction.GAULS && gaulsFoods.contains(food.getFoodType())) {
+                hunger_win = food.getFoodNutrition();
+            } else if (this.faction == Faction.ROMAN && romanFoods.contains(food.getFoodType())) {
+                hunger_win = food.getFoodNutrition();
+            }
+            System.out.println(this.name + " à mangé " + food.getName() + ". +" + hunger_win + " points de faim et +" + pv_win + " points de vie.");
+            this.hunger.add(hunger_win);
+            this.heal(pv_win);
+        }
     }
 
     @Override
@@ -87,5 +140,6 @@ public abstract class Character implements ICharacterAction {
     public boolean isDead() {
         return this.health.get() <= 0;
     }
+
 
 }
