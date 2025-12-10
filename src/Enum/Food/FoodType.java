@@ -1,8 +1,9 @@
-package src.Food;
+package src.Enum.Food;
 
 public enum FoodType {
     WILD_BOAR, // Sanglier
-    FISH, // Poisson
+    FAIRLY_FRESH_FISH, // Poisson passablement frais
+    NOT_FRESH_FISH, // Poisson pas frais
     MISTLETOE, // Gui
     LOBSTER, // Homard
     STRAWBERRY, // Fraise

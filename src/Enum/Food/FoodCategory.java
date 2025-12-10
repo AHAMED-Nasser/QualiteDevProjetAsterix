@@ -1,4 +1,4 @@
-package src.Food;
+package src.Enum.Food;
 
 public enum FoodCategory {
     VEGETABLE, // Végétal

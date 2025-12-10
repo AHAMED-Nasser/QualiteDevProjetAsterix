@@ -1,7 +1,7 @@
-package src.Enum;
+package src.Enum.Character;
 
 public enum Faction {
-    GAULOIS,
-    ROMAIN,
-    CREATURE_FANTASTIQUE
+    GAULS,
+    ROMAN,
+    FANTASTIC_CREATURE
 }

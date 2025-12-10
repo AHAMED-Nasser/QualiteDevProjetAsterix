@@ -1,4 +1,4 @@
-package src.Enum;
+package src.Enum.Character;
 
 public enum Occupation {
     FORGERON,
