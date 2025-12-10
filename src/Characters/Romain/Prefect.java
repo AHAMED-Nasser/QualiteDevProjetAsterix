@@ -1,12 +1,13 @@
 package src.Characters.Romain;
 
 import src.Characters.Character;
+import src.Enum.Character.Faction;
 import src.Interfaces.ILeader;
 
 public class Prefect extends src.Characters.Character implements ILeader {
 
-    public Prefect(String name, char sex, int height, int age, int strength, int stamina) {
-        super(name, sex, height, age, strength, stamina);
+    public Prefect(String name, char sex, int height, int age, int strength, int stamina, Faction faction) {
+        super(name, sex, height, age, strength, stamina, faction);
     }
 
     @Override

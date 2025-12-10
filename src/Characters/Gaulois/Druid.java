@@ -1,14 +1,15 @@
 package src.Characters.Gaulois;
 
 import src.Characters.Character;
+import src.Enum.Character.Faction;
 import src.Interfaces.IFighter;
 import src.Interfaces.ILeader;
 import src.Interfaces.IWorker;
 
 public class Druid extends src.Characters.Character implements IWorker, ILeader, IFighter {
 
-    public Druid(String name, char sex, int height, int age, int strength, int stamina) {
-        super(name, sex, height, age, strength, stamina);
+    public Druid(String name, char sex, int height, int age, int strength, int stamina, Faction faction) {
+        super(name, sex, height, age, strength, stamina, faction);
     }
 
     @Override
