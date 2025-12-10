@@ -64,9 +64,9 @@ public abstract class Character implements ICharacterAction {
     public Faction getFaction() { return this.faction; }
 
     //--- Setters ---
-    protected void setHealth(Statistics health) { this.health = health; }
-    protected void setHunger(Statistics hunger) { this.hunger = hunger; }
-    protected void setMagicPotion(Statistics magicPotion) { this.magicPotion = magicPotion; }
+    public void setHealth(Statistics health) { this.health = health; }
+    public void setHunger(Statistics hunger) { this.hunger = hunger; }
+    public void setMagicPotion(Statistics magicPotion) { this.magicPotion = magicPotion; }
 
     @Override
     public void takeDamage(int damage) {
@@ -142,7 +142,7 @@ public abstract class Character implements ICharacterAction {
     }
 
     @Override
-    public void displayInformation() {
+    public void displayFullInformation() {
         System.out.println("<-------- Information de " + this.getName() +" -------->");
         System.out.println("Nom: " + this.name + " | Age: " + this.age + " | " + this.sex);
         System.out.println("Faction: " + this.faction);
@@ -153,5 +153,13 @@ public abstract class Character implements ICharacterAction {
         System.out.println("Belligérance: " + this.belligerence.get() + "/" + this.belligerence.getMax());
         System.out.println("Niveau de potion magique: " + this.magicPotion.get() + "/" + this.magicPotion.getMax());
         System.out.println("<----------------------------------------->");
+    }
+
+    @Override
+    public void displayMinInformation() {
+        System.out.println("<---- " + this.name + " ---->");
+        System.out.println("Nom: " + this.name);
+        System.out.println("Faction: " + this.faction);
+        System.out.println("PV: " + this.health.get() + "/100 | Faim: " + this.hunger.get() + "/100");
     }
 }
