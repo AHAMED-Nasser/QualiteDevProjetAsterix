@@ -1,6 +1,8 @@
 package src.Food;
 
-import src.Statistics;
+import src.Enum.Food.FoodCategory;
+import src.Enum.Food.FoodFreshness;
+import src.Enum.Food.FoodType;
 
 public class Food {
 
@@ -8,12 +10,14 @@ public class Food {
     private int foodNutrition;
     private FoodType foodType;
     private FoodFreshness foodFreshness;
+    private FoodCategory foodCategory;
 
-    public Food(String name, int foodNutrition, FoodType foodType, FoodFreshness foodFreshness, FoodCategorie foodCategory) {
+    public Food(String name, int foodNutrition, FoodType foodType, FoodFreshness foodFreshness, FoodCategory foodCategory) {
         this.name = name;
         this.foodNutrition = foodNutrition;
         this.foodType = foodType;
         this.foodFreshness = foodFreshness;
+        this.foodCategory = foodCategory;
     }
 
     // Getter
@@ -21,5 +25,5 @@ public class Food {
     public int getFoodNutrition() { return this.foodNutrition; }
     public FoodType getFoodType() { return this.foodType; }
     public FoodFreshness getFoodFreshness() { return this.foodFreshness; }
-
+    public FoodCategory getFoodCategory() { return this.foodCategory; }
 }
