@@ -3,7 +3,7 @@ package src.Place.Interface;
 import src.Food.Food;
 import src.Characters.Character;
 
-public interface IPlace {
+public interface ISafePlace {
     void displayCharacter();
     void displayCharacterMinInfo();
     void displayCharacterFullInfo();
@@ -14,4 +14,6 @@ public interface IPlace {
     void healAllCharacters();
     void healOneCharacters(Character character);
     void addFood(Food food);
+    void feedAllCharacters();
+    void feedOneCharacters(Character character);
 }
