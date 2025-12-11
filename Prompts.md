@@ -33,3 +33,7 @@ Ce document résume les requêtes clés (prompts) qui ont guidé l'évolution du
 | **Transfert de Troupes** | Correction du retrait des personnages lors du transfert vers le champ de bataille. | Correction de l'erreur d'index dans `SafePlace::transferCharacter` en utilisant `remove(0)` pour garantir un transfert sûr. |
 | **Génération Javadoc** | Instructions pour générer la Javadoc (`.html`) et les commentaires (`/** */`) automatiques dans IntelliJ. | Fourniture de la procédure et des arguments de ligne de commande pour la génération. |
 | **Documentation Finale** | Création du README final récapitulant les prompts. | (Ce document). |
+
+# Autre sources
+
+* Base de notre projet grandement inspiré du projet github de FUSELIER Jule: https://github.com/julesfuselier
