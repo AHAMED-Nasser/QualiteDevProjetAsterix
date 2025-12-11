@@ -18,5 +18,5 @@ public interface ISafePlace {
     void addFood(Food food);
     void feedAllCharacters();
     void feedOneCharacters(Character character);
-    List<Character> transferCharacter(int nbCharacter);
+    void transferCharacter(int nbCharacter, BattleField battleField);
 }
