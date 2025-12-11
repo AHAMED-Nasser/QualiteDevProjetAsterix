@@ -7,6 +7,7 @@ import src.Interfaces.Place.ISafePlace;
 import src.Statistics;
 
 import java.util.List;
+import java.util.Map;
 
 public class SafePlace extends Place implements ISafePlace {
 
@@ -20,6 +21,7 @@ public class SafePlace extends Place implements ISafePlace {
     @Override
     public void displayPlaceInfo() {
         System.out.println("<----------- INFORMATION DU LIEU: " + this.getName() + " ------------>");
+        System.out.println("Chef du clan: " + this.clanChief.getName());
         System.out.println("Nom: " + this.getName());
         System.out.println("Surface: " + this.getSurface() + "m²");
         System.out.println("Type de village: " + this.getTypePlace());
@@ -54,9 +56,14 @@ public class SafePlace extends Place implements ISafePlace {
     @Override
     public void displayFood() {
         System.out.println("<---- Aliment présent dans le lieu: " + this.getName() + " ---->");
-        for (Food food : this.getFoodList()) {
-            System.out.println("-> " + food);
-        }
+        System.out.println("Nombre aliment dans le lieu: " + this.getFoodList().size());
+        Map<String, Long> countByType = getFoodList().stream()
+                .map(food -> food.getName()) // Assurez-vous que Food a une méthode getName()
+                .collect(java.util.stream.Collectors.groupingBy(name -> name, java.util.stream.Collectors.counting()));
+
+        countByType.entrySet().stream()
+                .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
+                .forEach(entry -> System.out.println(" - " + entry.getKey() + " : " + entry.getValue() + " unités"));
     }
 
     @Override
@@ -99,4 +106,6 @@ public class SafePlace extends Place implements ISafePlace {
         System.out.println("Le chef de clan à nourrit " + character.getName());
         character.setHunger(new Statistics(100, 0, 100));
     }
+
+
 }
