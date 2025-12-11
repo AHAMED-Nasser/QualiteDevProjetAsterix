@@ -5,10 +5,14 @@ import src.main.java.characters.CreatePopulation;
 import src.main.java.food.Food;
 import src.main.java.Enum.place.TypePlace;
 import src.main.java.Statistics;
+import src.main.java.items.Cauldron;
 
+import java.lang.classfile.instruction.CharacterRange;
 import java.util.List;
 
 public class SafePlace extends Place implements ISafePlace {
+
+    private Cauldron cauldron;
 
     private Character clanChief;
     private int nbGauls;
@@ -21,6 +25,7 @@ public class SafePlace extends Place implements ISafePlace {
         this.nbGauls = nbGauls;
         this.nbRoman = nbRoman;
         this.nbLycanthrope = nbLycanthrope;
+        this.cauldron = new Cauldron(10);
 
         CreatePopulation populator = new CreatePopulation();
         List<Character> allCharacters = populator.generateSimulationPopulation(this.nbGauls, this.nbRoman, this.nbLycanthrope);
@@ -29,6 +34,9 @@ public class SafePlace extends Place implements ISafePlace {
             characterList.add(character);
         }
     }
+
+    // getter
+    public Cauldron getCauldron() { return this.cauldron; }
 
     @Override
     public void displayPlaceInfo() {
@@ -76,9 +84,15 @@ public class SafePlace extends Place implements ISafePlace {
 
     @Override
     public void transferCharacter(int nbCharacter, BattleField battleField) {
-        for (int i = 0; i < nbCharacter; i++) {
-            battleField.addCharacter(this.getCharacterList().get(i));
-            this.getCharacterList().remove(i);
+        // S'assurer de ne pas essayer de transférer plus de personnages que disponibles
+        int actualTransferCount = Math.min(nbCharacter, this.getCharacterList().size());
+
+        System.out.println(this.getName() + " transfère " + actualTransferCount + " personnages vers " + battleField.getName());
+
+        for (int i = 0; i < actualTransferCount; i++) {
+            Character characterToMove = this.getCharacterList().getFirst();
+            battleField.addCharacter(characterToMove);
+            this.getCharacterList().remove(0);
         }
     }
 

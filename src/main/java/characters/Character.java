@@ -34,6 +34,12 @@ public abstract class Character implements ICharacterAction {
             FoodType.WILD_BOAR, FoodType.HONEY, FoodType.WINE, FoodType.MEAD
     );
 
+    // Attribut pour la potion
+    private boolean isInvincible = false;
+    private int dosesDrunkTotal = 0;
+    private boolean isGraniteStatue = false;
+    private boolean isLycanthrope = false; // Pour la transformation Idéfix
+
     public Character(String name, char sex, int height, int age, int strength, int stamina, Faction faction) {
         this.name = name;
         this.sex = sex;
@@ -65,6 +71,12 @@ public abstract class Character implements ICharacterAction {
     @Override
     public void takeDamage(int damage) {
         if (this.isDead()) return;
+
+        // Invicibilité
+        if (this.isInvincible) {
+            System.out.println("   🛡️ " + this.name + " est invincible ! (0 dégâts)");
+            return;
+        }
 
         this.health.add(-damage);
 
@@ -151,10 +163,49 @@ public abstract class Character implements ICharacterAction {
 
     @Override
     public void drinkMagicPotion(int potionAmount) {
-        if (this.isDead()) return;
+        if (this.isDead() || this.isGraniteStatue) return;
 
         this.magicPotion.add(potionAmount);
-        System.out.println(this.name + " boit de la potion magique. Niveau de potion : " + this.magicPotion);
+        this.dosesDrunkTotal++;
+        this.isInvincible = true; // Active l'invincibilité temporaire
+
+        System.out.println(this.name + " boit de la potion ! (Force décuplée + Invincibilité)");
+
+        // "En boire deux marmites transforme en statue de granit."
+        // Supposons qu'une marmite = 10 doses. Donc 2 marmites = 20 doses.
+        if (this.dosesDrunkTotal >= 20) {
+            this.isGraniteStatue = true;
+            this.isInvincible = false; // Une statue ne se bat pas
+            this.health.add(-1000); // Techniquement "mort" pour le jeu
+            System.out.println("   🗿 PAR TOUTATIS ! " + this.name + " A TROP BU ! Il s'est transformé en statue de granit !");
+        }
+    }
+
+    // Méthode pour gérer les effets spéciaux (appelée par la SafePlace ou le Cauldron logic)
+    public void applySpecialPotionEffect(boolean unicorn, boolean idefix) {
+        if (idefix) {
+            // métamorphosis en lycanthrope
+            this.isLycanthrope = true;
+            System.out.println("   🐺 " + this.name + " se transforme en Lycanthrope !");
+            // Ici, idéalement, on devrait changer la classe de l'objet ou ses stats
+            this.strength += 50;
+        }
+        if (unicorn) {
+            // pouvoir de dédoublement
+            System.out.println("   ✨ " + this.name + " voit double... ou c'est nous ? (Dédoublement actif)");
+            // Effet à implémenter dans le combat (taper 2 fois ?)
+        }
+    }
+
+    // On pense à vérifier l'invincibilité quand la potion retombe à 0
+    public void decreasePotionEffect() {
+        if (this.magicPotion.get() > 0) {
+            this.magicPotion.add(-10);
+            if (this.magicPotion.get() <= 0) {
+                this.isInvincible = false; // Fin de l'effet
+                System.out.println("   L'effet de la potion se dissipe pour " + this.name);
+            }
+        }
     }
 
     @Override

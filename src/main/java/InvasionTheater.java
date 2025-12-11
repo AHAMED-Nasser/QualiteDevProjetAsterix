@@ -8,13 +8,13 @@ import src.main.java.characters.gaulois.Druid;
 import src.main.java.Enum.character.Faction;
 import src.main.java.Enum.food.FoodFreshness;
 import src.main.java.Enum.food.FoodType;
-import src.main.java.Enum.place.TypePlace;
 import src.main.java.food.Food;
 import src.main.java.food.FoodFactory;
 import src.main.java.food.StockFood;
 import src.main.java.place.BattleField;
 import src.main.java.place.Place;
 import src.main.java.place.SafePlace;
+import src.main.java.items.Cauldron; // Assurez-vous d'avoir créé la classe Cauldron dans le package items
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -31,7 +31,7 @@ public class InvasionTheater {
     private Scanner scanner;
     private Random random;
     private StockFood stockFoodGenerator;
-    private FoodFactory foodFactory; // Pour que les travailleurs créent de la nourriture
+    private FoodFactory foodFactory;
 
     // Contrôle du thread de temps
     private volatile boolean isPaused = false;
@@ -57,13 +57,13 @@ public class InvasionTheater {
                         System.out.println("║   ANNÉE 50 AV. J.C. - SEMAINE " + turn + " - THÉÂTRE : " + this.name.toUpperCase() + "   ║");
                         System.out.println("╚════════════════════════════════════════════════════════════════╝");
 
-                        // 1. La vie quotidienne (Manger, Travailler, Soigner)
+                        // 1. La vie quotidienne (Manger, Travailler, Potion)
                         handleDailyLife();
 
                         // 2. Les Combats
                         handleAdvancedBattles();
 
-                        // 3. Gestion de l'environnement (Nourriture pourrit, morts disparaissent)
+                        // 3. Gestion de l'environnement
                         updateEnvironmentAndCleanup();
 
                         // 4. Conditions de victoire
@@ -99,46 +99,55 @@ public class InvasionTheater {
         }
     }
 
-    // --- 1. VIE QUOTIDIENNE (INTELLIGENCE ARTIFICIELLE) ---
+    // --- 1. VIE QUOTIDIENNE ---
     private void handleDailyLife() {
         System.out.println("\n🔨 --- VIE DU VILLAGE --- 🔨");
 
         for (Place place : places) {
-            // On ne travaille pas et on ne mange pas tranquillement sur le champ de bataille
             if (place instanceof BattleField) continue;
 
             List<Character> population = place.getCharacterList();
-            List<Food> pantry = place.getFoodList(); // Le garde-manger du lieu
+            List<Food> pantry = place.getFoodList();
+
+            // Gestion Automatique de la Potion (Les druides vérifient la marmite)
+            if (place instanceof SafePlace) {
+                SafePlace safePlace = (SafePlace) place;
+                Cauldron cauldron = safePlace.getCauldron();
+
+                // Si la marmite est vide, on cherche un druide pour en faire
+                if (cauldron != null && cauldron.isEmpty()) {
+                    for (Character c : population) {
+                        if (c instanceof Druid) {
+                            // Le druide tente de faire la potion s'il travaille
+                            ((Druid) c).brewPotion(place, cauldron);
+                            break; // Un seul druide suffit par tour
+                        }
+                    }
+                }
+            }
 
             for (Character c : population) {
                 if (c.isDead()) continue;
 
-                // A. MANGER (Si faim < 50)
-                // C'est ici qu'on utilise votre méthode eat() !
+                // A. MANGER
                 if (c.getHunger().get() < 50) {
                     if (!pantry.isEmpty()) {
-                        // On prend la première nourriture venue (ou on pourrait chercher la meilleure)
                         Food food = pantry.remove(0);
-                        c.eat(food); // <-- Appel de VOTRE méthode avec toute sa logique (préférences, pas frais, etc.)
-                    } else {
-                        System.out.println("   " + c.getName() + " cherche à manger à " + place.getName() + " mais le stock est vide !");
+                        c.eat(food);
                     }
                 }
 
-                // B. TRAVAILLER (Si c'est un IWorker et qu'il n'a pas trop faim)
+                // B. TRAVAILLER
                 if (c instanceof IWorker && c.getHunger().get() > 20) {
                     ((IWorker) c).work();
 
-                    // Récompense du travail : chance de produire de la nourriture ou potion
-                    if (random.nextInt(100) < 20) { // 20% de chance de produire
+                    if (random.nextInt(100) < 20) {
                         if (c instanceof Druid) {
-                            // Le druide soigne quelqu'un au hasard au lieu de créer de la nourriture
                             performRandomHeal(place, (Druid) c);
                         } else {
-                            // Les autres (Forgeron, etc.) "produisent" (simulation simplifiée par création de nourriture)
-                            Food produced = foodFactory.createFood(FoodType.WILD_BOAR); // Ils chassent ou produisent
+                            Food produced = foodFactory.createFood(FoodType.WILD_BOAR);
                             place.addFood(produced);
-                            System.out.println("   --> Le travail de " + c.getName() + " a rapporté : " + produced.getName());
+                            System.out.println("   --> " + c.getName() + " a produit : " + produced.getName());
                         }
                     }
                 }
@@ -147,24 +156,21 @@ public class InvasionTheater {
     }
 
     private void performRandomHeal(Place place, Druid druid) {
-        // Le druide cherche le plus blessé
         Character target = null;
         int minHealth = 100;
-
         for (Character c : place.getCharacterList()) {
             if (!c.isDead() && c.getHealth().get() < minHealth) {
                 minHealth = c.getHealth().get();
                 target = c;
             }
         }
-
         if (target != null && target.getHealth().get() < 80) {
-            System.out.println("   ✨ Le Druide " + druid.getName() + " soigne " + target.getName() + " !");
+            System.out.println("   ✨ Le Druide " + druid.getName() + " soigne " + target.getName());
             target.heal(30);
         }
     }
 
-    // --- 2. LOGIQUE DE COMBAT ---
+    // --- 2. COMBATS ---
     private void handleAdvancedBattles() {
         boolean fightingHappened = false;
         for (Place place : places) {
@@ -175,9 +181,8 @@ public class InvasionTheater {
                         System.out.println("\n⚔️ --- PHASE DE BATAILLE --- ⚔️");
                         fightingHappened = true;
                     }
-                    System.out.println("   Bataille en cours sur : " + place.getName());
+                    System.out.println("   Bataille sur : " + place.getName());
 
-                    // Mélange pour aléatoire
                     List<Character> activeFighters = new ArrayList<>(fighters);
                     java.util.Collections.shuffle(activeFighters);
 
@@ -197,20 +202,25 @@ public class InvasionTheater {
 
     private void resolveDuel(Character attacker, Character defender) {
         int atkPower = attacker.getStrength();
-        // Bonus Potion
+
+        // Bonus Potion (Si actif, force x3)
+        // Note: isInvincible est géré dans takeDamage() du défenseur
         if (attacker.getMagicPotion().get() > 0) {
             atkPower *= 3;
+            System.out.print("⚡ ");
         }
 
         int defResistance = defender.getStamina() / 2;
         int damage = Math.max(1, atkPower - defResistance + random.nextInt(10));
 
-        System.out.println("   ⚔️ " + attacker.getName() + " tape " + defender.getName() + " (-" + damage + " PV)");
+        System.out.println(attacker.getName() + " tape " + defender.getName() + " (-" + damage + " PV)");
         defender.takeDamage(damage);
 
         if (!defender.isDead()) {
-            // Riposte
-            int ripDamage = Math.max(1, (defender.getStrength()) - (attacker.getStamina() / 2));
+            int ripPower = defender.getStrength();
+            if (defender.getMagicPotion().get() > 0) ripPower *= 3;
+
+            int ripDamage = Math.max(1, ripPower - (attacker.getStamina() / 2));
             System.out.println("      ↪️ Riposte de " + defender.getName() + " (-" + ripDamage + " PV)");
             attacker.takeDamage(ripDamage);
         } else {
@@ -218,10 +228,9 @@ public class InvasionTheater {
         }
     }
 
-    // --- 3. GESTION ENVIRONNEMENT ---
+    // --- 3. ENVIRONNEMENT ---
     private void updateEnvironmentAndCleanup() {
         for (Place place : places) {
-            // A. Nettoyage des morts
             Iterator<Character> it = place.getCharacterList().iterator();
             while (it.hasNext()) {
                 Character c = it.next();
@@ -230,18 +239,19 @@ public class InvasionTheater {
                     continue;
                 }
 
-                // Digestion (Faim augmente)
-                c.getHunger().add(-10); // On perd de la faim à chaque tour
+                // Faim
+                c.getHunger().add(-10);
                 if (c.getHunger().get() <= 0) {
                     System.out.println("   ⚠️ " + c.getName() + " meurt de famine !");
                     c.takeDamage(1000);
                 }
 
-                // Dissipation potion
-                if(c.getMagicPotion().get() > 0) c.getMagicPotion().add(-10);
+                // Dissipation potion (Appel de la méthode du Character)
+                c.decreasePotionEffect();
             }
 
-            // B. Pourrissement de la nourriture (Seulement si pas mangée)
+            // Pourrissement et Apparition nourriture...
+            // (Code identique à la version précédente pour abréger)
             for (Food food : place.getFoodList()) {
                 if (food.getFoodFreshness() == FoodFreshness.FRESH && random.nextInt(100) < 30) {
                     food.setFoodFreshness(FoodFreshness.FAIRLY_FRESH);
@@ -249,8 +259,6 @@ public class InvasionTheater {
                     food.setFoodFreshness(FoodFreshness.NOT_FRESH);
                 }
             }
-
-            // C. Apparition spontanée (Nature)
             if (!(place instanceof BattleField) && random.nextInt(100) < 20) {
                 List<Food> loot = stockFoodGenerator.generateInitialStock(1);
                 if(!loot.isEmpty()) place.addFood(loot.get(0));
@@ -258,7 +266,7 @@ public class InvasionTheater {
         }
     }
 
-    // --- 4. INTERACTIONS JOUEUR ---
+    // --- 4. INTERACTIONS JOUEUR (Chef de Clan) ---
     private void handlePlayerTurn() {
         System.out.println("\n👑 --- MENU CHEF DE CLAN --- 👑");
 
@@ -267,13 +275,12 @@ public class InvasionTheater {
                 .map(p -> (SafePlace) p)
                 .collect(Collectors.toList());
 
-        System.out.println("Lieux sous votre commandement :");
+        System.out.println("Lieux sous commandement :");
         for (int i = 0; i < safePlaces.size(); i++) {
             System.out.println(" " + (i + 1) + ". " + safePlaces.get(i).getName()
-                    + " (Pop: " + safePlaces.get(i).getNumberOfCharacters()
-                    + " | Vivres: " + safePlaces.get(i).getFoodList().size() + ")");
+                    + " (Pop: " + safePlaces.get(i).getNumberOfCharacters() + ")");
         }
-        System.out.println(" 0. Retour à la simulation");
+        System.out.println(" 0. Retour");
 
         int choice = getIntInput(safePlaces.size());
         if (choice == 0) return;
@@ -285,14 +292,17 @@ public class InvasionTheater {
     private void managePlace(SafePlace place) {
         boolean back = false;
         while (!back) {
-            System.out.println("\n--- GESTION : " + place.getName().toUpperCase() + " ---");
-            System.out.println("1. Examiner (Voir détails persos & nourriture)");
-            System.out.println("2. Envoyer des troupes au front");
-            // Note: On a retiré "Nourrir tout le monde" car c'est automatique maintenant !
-            // Mais on pourrait ajouter "Organiser un festin" qui force à manger même sans faim.
-            System.out.println("3. Retour");
+            Cauldron cauldron = place.getCauldron();
+            int doses = (cauldron != null) ? cauldron.getDoses() : 0;
 
-            int action = getIntInput(3);
+            System.out.println("\n--- GESTION : " + place.getName().toUpperCase() + " ---");
+            System.out.println("1. Examiner le lieu");
+            System.out.println("2. Envoyer des troupes au front");
+            System.out.println("3. Demander au Druide de préparer la Potion (Stock Marmite: " + doses + ")");
+            System.out.println("4. Distribuer la Potion Magique");
+            System.out.println("5. Retour");
+
+            int action = getIntInput(5);
             switch (action) {
                 case 1:
                     place.displayPlaceInfo();
@@ -303,10 +313,70 @@ public class InvasionTheater {
                     sendTroopsMenu(place);
                     break;
                 case 3:
+                    // Ordre au druide [Cite: 181]
+                    orderDruidToBrew(place);
+                    break;
+                case 4:
+                    // Distribution [Cite: 186]
+                    distributePotion(place);
+                    break;
+                case 5:
                     back = true;
                     break;
             }
         }
+    }
+
+    // Commande Chef -> Druide
+    private void orderDruidToBrew(SafePlace place) {
+        Cauldron cauldron = place.getCauldron();
+        if (cauldron == null) {
+            System.out.println("Il n'y a pas de marmite ici !");
+            return;
+        }
+
+        // Trouver un druide
+        Druid druid = null;
+        for (Character c : place.getCharacterList()) {
+            if (c instanceof Druid) {
+                druid = (Druid) c;
+                break;
+            }
+        }
+
+        if (druid != null) {
+            // Le druide exécute l'ordre
+            druid.brewPotion(place, cauldron);
+        } else {
+            System.out.println("Aucun druide disponible pour cet ordre !");
+        }
+    }
+
+    // Commande Chef -> Troupes
+    private void distributePotion(SafePlace place) {
+        Cauldron cauldron = place.getCauldron();
+        if (cauldron == null || cauldron.isEmpty()) {
+            System.out.println("La marmite est vide ou inexistante !");
+            return;
+        }
+
+        System.out.println("Distribution de la potion en cours...");
+        int count = 0;
+        for (Character c : place.getCharacterList()) {
+            // Seuls les combattants boivent, et seulement s'ils n'en ont pas déjà
+            if (c instanceof IFighter && c.getMagicPotion().get() == 0) {
+                if (cauldron.takeDose()) {
+                    c.drinkMagicPotion(50); // +50 niveau potion
+                    // Appliquer effets spéciaux (Licorne/Idéfix) si la marmite en a
+                    c.applySpecialPotionEffect(cauldron.hasUnicornMilk(), cauldron.hasIdefixHair());
+                    count++;
+                } else {
+                    System.out.println("Plus de potion !");
+                    break;
+                }
+            }
+        }
+        System.out.println(count + " guerriers ont bu la potion !");
     }
 
     private void sendTroopsMenu(SafePlace source) {
@@ -320,21 +390,14 @@ public class InvasionTheater {
             return;
         }
 
-        System.out.println("Vers quel champ de bataille ?");
-        for (int i = 0; i < battleFields.size(); i++) {
-            System.out.println(" " + (i + 1) + ". " + battleFields.get(i).getName());
-        }
-
+        System.out.println("Vers quel champ de bataille ? (1-" + battleFields.size() + ")");
         int bfIndex = getIntInput(battleFields.size());
         if (bfIndex == 0) return;
 
-        System.out.println("Combien de soldats envoyer ? (Max " + source.getNumberOfCharacters() + ")");
+        System.out.println("Combien de soldats ? (Max " + source.getNumberOfCharacters() + ")");
         int count = getIntInput(source.getNumberOfCharacters());
 
-        if (count > 0) {
-            source.transferCharacter(count, battleFields.get(bfIndex - 1));
-            System.out.println(count + " braves sont partis au combat !");
-        }
+        if (count > 0) source.transferCharacter(count, battleFields.get(bfIndex - 1));
     }
 
     private int getIntInput(int max) {
