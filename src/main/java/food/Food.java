@@ -26,4 +26,7 @@ public class Food {
     public FoodType getFoodType() { return this.foodType; }
     public FoodFreshness getFoodFreshness() { return this.foodFreshness; }
     public FoodCategory getFoodCategory() { return this.foodCategory; }
+
+    // Setter
+    public void setFoodFreshness(FoodFreshness foodFreshness) { this.foodFreshness = foodFreshness; }
 }
