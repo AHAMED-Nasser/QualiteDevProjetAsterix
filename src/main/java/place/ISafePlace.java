@@ -13,7 +13,6 @@ public interface ISafePlace {
     void removeCharacter(Character character);
     void healAllCharacters();
     void healOneCharacters(Character character);
-    void addFood(Food food);
     void feedAllCharacters();
     void feedOneCharacters(Character character);
     void transferCharacter(int nbCharacter, BattleField battleField);
