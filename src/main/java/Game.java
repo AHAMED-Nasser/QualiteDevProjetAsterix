@@ -1,45 +1,53 @@
 package src.main.java;
 
+import src.main.java.InvasionTheater;
 import src.main.java.characters.Character;
 import src.main.java.characters.CharacterFactory;
+import src.main.java.characters.ClanChief;
 import src.main.java.Enum.character.Faction;
 import src.main.java.Enum.character.Occupation;
 import src.main.java.Enum.place.TypePlace;
 import src.main.java.place.BattleField;
+import src.main.java.place.Place;
 import src.main.java.place.PlaceFactory;
 import src.main.java.place.SafePlace;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Game {
 
     public void run() {
 
-        // Create clan chief
+        // 1. Création du Chef de Clan (Casting nécessaire car createCharacter renvoie Character)
         CharacterFactory factory = new CharacterFactory();
-        Character chef_clan = factory.createCharacter(Faction.GAULS, Occupation.CLAN_CHIEF, "Nasser");
+        Character charChef = factory.createCharacter(Faction.GAULS, Occupation.CLAN_CHIEF, "Abraracourcix");
+        ClanChief chefDeClan = (ClanChief) charChef; // Casting sûr car on a demandé un CLAN_CHIEF
 
-
+        // 2. Création des lieux
         PlaceFactory placeFactory = new PlaceFactory();
 
-        // SafePlace
+        SafePlace villageGaulois = placeFactory.createSafePlace("Village gaulois", TypePlace.GAULS_VILLAGE, chefDeClan);
+        SafePlace campRetrancheRomain = placeFactory.createSafePlace("Camp retranché romain", TypePlace.ROMAN_FORTIFIED_CAMP, chefDeClan);
+        BattleField champDeBattaille = placeFactory.createBattleField("Plaine des baffes", TypePlace.BATTLEFIELD);
 
-        SafePlace villageGaulois = placeFactory.createSafePlace("Village gaulois", TypePlace.GAULS_VILLAGE, chef_clan);
-        SafePlace campRetrancheRomain = placeFactory.createSafePlace("Camp retranché romain", TypePlace.ROMAN_FORTIFIED_CAMP, chef_clan);
-        SafePlace villeRomain = placeFactory.createSafePlace("Ville romain", TypePlace.ROMAN_CITY, chef_clan);
-        SafePlace bourgadeGalloRomaine = placeFactory.createSafePlace("Bourgade gallo-romaine", TypePlace.GALLO_ROMAN_VILLAGE, chef_clan);
-        SafePlace enclos = placeFactory.createSafePlace("Enclos", TypePlace.ENCLOSURE, chef_clan);
+        // 3. Transfert initial de troupes pour qu'il y ait de l'action
+        System.out.println("--- Préparation de la simulation ---");
+        villageGaulois.transferCharacter(5, champDeBattaille); // 5 Gaulois vont à la bagarre
+        campRetrancheRomain.transferCharacter(5, champDeBattaille); // 5 Romains vont à la bagarre
 
-        // Battle Field
-        BattleField champDeBattaille = placeFactory.createBattleField("Champ de battaille", TypePlace.BATTLEFIELD);
+        // 4. Initialisation du Théâtre d'Envahissement
+        List<Place> allPlaces = new ArrayList<>();
+        allPlaces.add(villageGaulois);
+        allPlaces.add(campRetrancheRomain);
+        allPlaces.add(champDeBattaille);
 
+        List<ClanChief> chiefs = new ArrayList<>();
+        chiefs.add(chefDeClan);
 
-        System.out.println("--- Début de la simulation ---");
+        InvasionTheater theater = new InvasionTheater("Armorique", allPlaces, chiefs);
 
-        villageGaulois.transferCharacter(20, champDeBattaille);
-
-        champDeBattaille.displayCharacterMinInfo();
-        champDeBattaille.displayFood();
-
+        // 5. Lancement
+        theater.run();
     }
-
-
 }
