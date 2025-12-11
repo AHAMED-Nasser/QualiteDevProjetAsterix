@@ -88,4 +88,9 @@ public abstract class Place implements IPlace {
     public void removeCharacter(Character character) {
         this.getCharacterList().remove(character);
     }
+
+    @Override
+    public void addFood(Food food) {
+        this.foodList.add(food);
+    }
 }
