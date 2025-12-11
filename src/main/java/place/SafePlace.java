@@ -61,11 +61,6 @@ public class SafePlace extends Place implements ISafePlace {
     }
 
     @Override
-    public void addFood(Food food) {
-        this.getFoodList().add(food);
-    }
-
-    @Override
     public void feedAllCharacters() {
         System.out.println("Le chef de clan à nourrit tout le monde.");
         for (Character character : this.getCharacterList()) {
