@@ -68,6 +68,5 @@ Pour que la livraison soit conforme aux exigences du §2 et §5 du document `Con
 | Critère | Détail                                                                   |
 | :--- |:-------------------------------------------------------------------------|
 | **Nom du Livrable** | `AHAMED-Nasser_CANTOR-Romain.zip`.                                       |
-| **URL du projet Git** | **[URL_GIT]** https://github.com/AHAMED-Nasser/QualiteDevProjetAsterix/tree/DEV.                        |
 | **Documentation Javadoc** | La documentation complète est générée dans le dossier `javadoc/`.        |
 | **Contenu du Livrable** | Inclut le code source, les tests unitaires et les documents demandés.    |
