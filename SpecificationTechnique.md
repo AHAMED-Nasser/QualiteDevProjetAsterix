@@ -1,7 +1,5 @@
 # Spécification Fonctionnelle Technique (SFT)
 
-Ce document couvre l'architecture du projet (Étude de Conception) et le processus de développement (Clôture du Travail), conformément aux exigences de la section 4.1 du document de consignes.
-
 ## Partie 1 : Étude de Conception et Architecture
 
 Le projet est une application de simulation en Java construite autour des principes de la **Programmation Orientée Objet (POO)** pour garantir la modularité, la robustesse et l'évolutivité.
