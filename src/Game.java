@@ -37,9 +37,10 @@ public class Game {
 
         System.out.println("--- Début de la simulation ---");
 
-        champDeBattaille.displayCharacter();
-        champDeBattaille.displayFood();
+        villageGaulois.transferCharacter(20, champDeBattaille);
 
+        champDeBattaille.displayCharacterMinInfo();
+        champDeBattaille.displayFood();
 
     }
 

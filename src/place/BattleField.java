@@ -12,8 +12,4 @@ public class BattleField extends Place implements IBattleField {
         super(name, surface, typePlace, characterList, foodList);
     }
 
-    @Override
-    public void addCharacter(List<Character> characters) {
-        this.setCharacterList(characters);
-    }
 }

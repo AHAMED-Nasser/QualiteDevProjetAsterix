@@ -83,13 +83,10 @@ public class SafePlace extends Place implements ISafePlace {
     }
 
     @Override
-    public List<Character> transferCharacter(int nbCharacter) {
-        List<Character> characters = new ArrayList<>();
+    public void transferCharacter(int nbCharacter, BattleField battleField) {
         for (int i = 0; i < nbCharacter; i++) {
-            characters.add(this.getCharacterList().get(i));
+            battleField.addCharacter(this.getCharacterList().get(i));
         }
-
-        return characters;
     }
 
 }
