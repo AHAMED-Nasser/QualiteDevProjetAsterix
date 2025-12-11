@@ -6,6 +6,16 @@ import src.main.java.characters.IFighter;
 
 public class Legionnaire extends src.main.java.characters.Character implements IFighter {
 
+    /**
+     * Legionnaire constructor
+     * @param name
+     * @param sex
+     * @param height
+     * @param age
+     * @param strength
+     * @param stamina
+     * @param faction
+     */
     public Legionnaire(String name, char sex, int height, int age, int strength, int stamina, Faction faction) {
         super(name, sex, height, age, strength, stamina, faction);
     }

@@ -20,6 +20,14 @@ public abstract class Place implements IPlace {
     StockFood stockFood = new StockFood();
     List<Food> foods = stockFood.generateInitialStock(new Random().nextInt(40, 99));
 
+    /**
+     * Place constructor
+     * @param name
+     * @param surface
+     * @param typePlace
+     * @param characterList
+     * @param foodList
+     */
     public Place(String name, int surface, TypePlace typePlace, List<Character> characterList, List<Food> foodList) {
         this.name = name;
         this.surface = surface;
@@ -47,6 +55,9 @@ public abstract class Place implements IPlace {
     public void setCharacterList(List<Character> characterList) { this.characterList = characterList; }
     public void setFoodList(List<Food> foodList) { this.foodList = foodList; }
 
+    /**
+     * Display character name present in the place
+     */
     @Override
     public void displayCharacter() {
         System.out.println("<---- Personnage présent dans le lieu: " + this.getName() + " ---->");
@@ -56,6 +67,9 @@ public abstract class Place implements IPlace {
         }
     }
 
+    /**
+     * Display minimum information for each character in the place
+     */
     @Override
     public void displayCharacterMinInfo() {
         System.out.println();
@@ -66,6 +80,9 @@ public abstract class Place implements IPlace {
         }
     }
 
+    /**
+     * Display food present in the place
+     */
     @Override
     public void displayFood() {
         System.out.println("<---- Aliment présent dans le lieu: " + this.getName() + " ---->");
@@ -79,16 +96,28 @@ public abstract class Place implements IPlace {
                 .forEach(entry -> System.out.println(" - " + entry.getKey() + " : " + entry.getValue() + " unités"));
     }
 
+    /**
+     * Add Character in the place
+     * @param character
+     */
     @Override
     public void addCharacter(Character character) {
         this.getCharacterList().add(character);
     }
 
+    /**
+     * Remove Character from the place
+     * @param character
+     */
     @Override
     public void removeCharacter(Character character) {
         this.getCharacterList().remove(character);
     }
 
+    /**
+     * Remove character from the place
+     * @param food
+     */
     @Override
     public void addFood(Food food) {
         this.foodList.add(food);

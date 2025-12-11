@@ -92,7 +92,7 @@ public class SafePlace extends Place implements ISafePlace {
         for (int i = 0; i < actualTransferCount; i++) {
             Character characterToMove = this.getCharacterList().getFirst();
             battleField.addCharacter(characterToMove);
-            this.getCharacterList().remove(0);
+            this.removeCharacter(characterToMove);
         }
     }
 

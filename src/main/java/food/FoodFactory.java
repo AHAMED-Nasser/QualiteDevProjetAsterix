@@ -6,6 +6,11 @@ import src.main.java.Enum.food.FoodType;
 
 public class FoodFactory {
 
+    /**
+     * Create Food easily
+     * @param foodType
+     * @return
+     */
     public Food createFood(FoodType foodType) {
         return switch (foodType) {
             case WILD_BOAR -> new Food("Sanglier", 60, foodType, FoodFreshness.FRESH, FoodCategory.MEAT);

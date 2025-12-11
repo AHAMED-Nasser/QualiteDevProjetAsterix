@@ -16,10 +16,25 @@ import java.util.List;
 
 public class Druid extends src.main.java.characters.Character implements IWorker, ILeader, IFighter {
 
+    /**
+     * Druid constructor
+     * @param name
+     * @param sex
+     * @param height
+     * @param age
+     * @param strength
+     * @param stamina
+     * @param faction
+     */
     public Druid(String name, char sex, int height, int age, int strength, int stamina, Faction faction) {
         super(name, sex, height, age, strength, stamina, faction);
     }
 
+    /**
+     * Brew of the magic potion cauldron
+     * @param place
+     * @param cauldron
+     */
     public void brewPotion(Place place, Cauldron cauldron) {
         if (!cauldron.isEmpty()) return;
 

@@ -6,6 +6,16 @@ import src.main.java.characters.IWorker;
 
 public class Innkeeper extends Character implements IWorker {
 
+    /**
+     * Innkeeper constructor
+     * @param name
+     * @param sex
+     * @param height
+     * @param age
+     * @param strength
+     * @param stamina
+     * @param faction
+     */
     public Innkeeper(String name, char sex, int height, int age, int strength, int stamina, Faction faction) {
         super(name, sex, height, age, strength, stamina, faction);
     }

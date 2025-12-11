@@ -10,6 +10,7 @@ import src.main.java.Statistics;
 import java.util.Arrays;
 import java.util.List;
 
+
 public abstract class Character implements ICharacterAction {
 
     // Basic stats
@@ -40,6 +41,16 @@ public abstract class Character implements ICharacterAction {
     private boolean isGraniteStatue = false;
     private boolean isLycanthrope = false; // Pour la transformation Idéfix
 
+    /**
+     * Constructeur de la classe abstraite Character
+     * @param name
+     * @param sex
+     * @param height
+     * @param age
+     * @param strength
+     * @param stamina
+     * @param faction
+     */
     public Character(String name, char sex, int height, int age, int strength, int stamina, Faction faction) {
         this.name = name;
         this.sex = sex;
@@ -68,6 +79,10 @@ public abstract class Character implements ICharacterAction {
     public void setHunger(Statistics hunger) { this.hunger = hunger; }
     public void setMagicPotion(Statistics magicPotion) { this.magicPotion = magicPotion; }
 
+    /**
+     * Character take damage
+     * @param damage
+     */
     @Override
     public void takeDamage(int damage) {
         if (this.isDead()) return;
@@ -85,6 +100,10 @@ public abstract class Character implements ICharacterAction {
         isDead(); // Verify if the player die after the fight
     }
 
+    /**
+     * Heal character
+     * @param amount
+     */
     @Override
     public void heal(int amount) {
         if (this.isDead()) return;
@@ -96,6 +115,10 @@ public abstract class Character implements ICharacterAction {
 
     private int nb_vegetables = 0; // Assurez-vous que cette ligne est présente au début de la classe Character
 
+    /**
+     * Character eat Food
+     * @param food
+     */
     @Override
     public void eat(Food food) {
         if (this.isDead()) return;
@@ -161,6 +184,10 @@ public abstract class Character implements ICharacterAction {
         }
     }
 
+    /**
+     * Character drink magic potion
+     * @param potionAmount
+     */
     @Override
     public void drinkMagicPotion(int potionAmount) {
         if (this.isDead() || this.isGraniteStatue) return;
@@ -181,6 +208,11 @@ public abstract class Character implements ICharacterAction {
         }
     }
 
+    /**
+     * Apply affect depending if there is unicorn milk and/or idefix hair
+     * @param unicorn
+     * @param idefix
+     */
     // Méthode pour gérer les effets spéciaux (appelée par la SafePlace ou le Cauldron logic)
     public void applySpecialPotionEffect(boolean unicorn, boolean idefix) {
         if (idefix) {
@@ -197,6 +229,9 @@ public abstract class Character implements ICharacterAction {
         }
     }
 
+    /**
+     * Decrease magic potion effect
+     */
     // On pense à vérifier l'invincibilité quand la potion retombe à 0
     public void decreasePotionEffect() {
         if (this.magicPotion.get() > 0) {
@@ -208,11 +243,18 @@ public abstract class Character implements ICharacterAction {
         }
     }
 
+    /**
+     * Check if character is dead
+     * @return boolean
+     */
     @Override
     public boolean isDead() {
         return this.health.get() <= 0;
     }
 
+    /**
+     * Displaye full character informations
+     */
     @Override
     public void displayFullInformation() {
         System.out.println("<-------- Information de " + this.getName() +" -------->");
@@ -227,6 +269,9 @@ public abstract class Character implements ICharacterAction {
         System.out.println("<----------------------------------------->");
     }
 
+    /**
+     * Display necessary character informations
+     */
     @Override
     public void displayMinInformation() {
         System.out.println("--> Nom: " + this.name + " || Faction: " + this.faction + " || PV: " + this.health.get() + "/100 || Faim: " + this.hunger.get() + "/100");

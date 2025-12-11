@@ -6,6 +6,16 @@ import src.main.java.characters.IFighter;
 
 public class Lycanthrope extends src.main.java.characters.Character implements IFighter {
 
+    /**
+     * Lycanthrope constructor
+     * @param name
+     * @param sex
+     * @param height
+     * @param age
+     * @param strength
+     * @param stamina
+     * @param faction
+     */
     public Lycanthrope(String name, char sex, int height, int age, int strength, int stamina, Faction faction) {
         super(name, sex, height, age, strength, stamina, faction);
     }

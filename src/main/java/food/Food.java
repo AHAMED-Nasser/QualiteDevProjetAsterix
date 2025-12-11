@@ -12,6 +12,14 @@ public class Food {
     private FoodFreshness foodFreshness;
     private FoodCategory foodCategory;
 
+    /**
+     * Food constructor
+     * @param name
+     * @param foodNutrition
+     * @param foodType
+     * @param foodFreshness
+     * @param foodCategory
+     */
     public Food(String name, int foodNutrition, FoodType foodType, FoodFreshness foodFreshness, FoodCategory foodCategory) {
         this.name = name;
         this.foodNutrition = foodNutrition;

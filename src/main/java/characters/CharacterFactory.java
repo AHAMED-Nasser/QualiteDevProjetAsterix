@@ -16,6 +16,13 @@ import java.util.Random;
 public class CharacterFactory {
     private Random random = new Random();
 
+    /**
+     * Create character easily
+     * @param faction
+     * @param occupation
+     * @param name
+     * @return Character
+     */
     public Character createCharacter(Faction faction, Occupation occupation, String name) {
         int height = 140 + random.nextInt(60);
         int age = 18 + random.nextInt(70);

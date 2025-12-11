@@ -50,10 +50,10 @@ public class StockFood {
     }
 
     /**
-     * Sélectionne un type de nourriture aléatoirement en utilisant les poids définis.
-     * Les types avec un poids plus élevé (comme WILD_BOAR) ont plus de chances d'être choisis.
+     * Selects a food type randomly using the defined weights.
+     * Types with a higher weight (such as WILD_BOAR) are more likely to be selected.
      *
-     * @return Un FoodType sélectionné aléatoirement.
+     * @return FoodType
      */
     private FoodType getRandomWeightedFoodType() {
         int index = random.nextInt(weightedFoodList.size());

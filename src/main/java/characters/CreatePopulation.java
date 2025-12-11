@@ -50,10 +50,10 @@ public class CreatePopulation {
     }
 
     /**
-     * Génère une liste de personnages pour la simulation.
-     * @param gaulCount Nombre de Gaulois à créer.
-     * @param romanCount Nombre de Romains à créer.
-     * @param fantasyCount Nombre de Créatures Fantastiques à créer.
+     * generate a certain number of characters
+     * @param gaulCount
+     * @param romanCount
+     * @param fantasyCount
      * @return La liste complète des personnages.
      */
     public List<Character> generateSimulationPopulation(int gaulCount, int romanCount, int fantasyCount) {

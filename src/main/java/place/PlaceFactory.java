@@ -10,6 +10,13 @@ import java.util.Random;
 public class PlaceFactory {
     Random rand = new Random();
 
+    /**
+     * Create safe place easily
+     * @param name
+     * @param typePlace
+     * @param clanChief
+     * @return
+     */
     public SafePlace createSafePlace(String name, TypePlace typePlace, Character clanChief) {
         int rand_surface = 5_000 + rand.nextInt(20_000);
         int randGauls = rand.nextInt(10,15);
@@ -26,6 +33,12 @@ public class PlaceFactory {
         };
     }
 
+    /**
+     * Create battlefield easily
+     * @param name
+     * @param typePlace
+     * @return
+     */
     public BattleField createBattleField(String name, TypePlace typePlace) {
         int rand_surface = 5_000 + rand.nextInt(20_000);
         return switch (typePlace) {

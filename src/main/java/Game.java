@@ -17,6 +17,12 @@ import java.util.List;
 
 public class Game {
 
+    /**
+     * Intialisation ot all the scenes
+     * * Chef de clan
+     * * Place factory (SafePlace, BattleField)
+     * * InvasionTheater Class (there is the Thread)
+     */
     public void run() {
 
         // 1. Création du Chef de Clan (Casting nécessaire car createCharacter renvoie Character)

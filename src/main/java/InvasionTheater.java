@@ -36,6 +36,12 @@ public class InvasionTheater {
     // Contrôle du thread de temps
     private volatile boolean isPaused = false;
 
+    /**
+     * InvasionTheater constructor
+     * @param name
+     * @param places
+     * @param chiefs
+     */
     public InvasionTheater(String name, List<Place> places, List<ClanChief> chiefs) {
         this.name = name;
         this.places = places;
@@ -46,6 +52,9 @@ public class InvasionTheater {
         this.foodFactory = new FoodFactory();
     }
 
+    /**
+     * The run methode
+     */
     public void run() {
 
         Thread timeThread = new Thread(() -> {
@@ -99,6 +108,9 @@ public class InvasionTheater {
         }
     }
 
+    /**
+     * Daily life methode
+     */
     // --- 1. VIE QUOTIDIENNE ---
     private void handleDailyLife() {
         System.out.println("\n🔨 --- VIE DU VILLAGE --- 🔨");
@@ -155,6 +167,12 @@ public class InvasionTheater {
         }
     }
 
+
+    /**
+     * Heal character if his life is < 80
+     * @param place
+     * @param druid
+     */
     private void performRandomHeal(Place place, Druid druid) {
         Character target = null;
         int minHealth = 100;
@@ -170,6 +188,9 @@ public class InvasionTheater {
         }
     }
 
+    /**
+     * Battle management
+     */
     // --- 2. COMBATS ---
     private void handleAdvancedBattles() {
         boolean fightingHappened = false;
@@ -200,6 +221,11 @@ public class InvasionTheater {
         }
     }
 
+    /**
+     * Duel between two character
+     * @param attacker
+     * @param defender
+     */
     private void resolveDuel(Character attacker, Character defender) {
         int atkPower = attacker.getStrength();
 
@@ -228,10 +254,14 @@ public class InvasionTheater {
         }
     }
 
+    /**
+     * Update the environnement and clean
+     */
     // --- 3. ENVIRONNEMENT ---
     private void updateEnvironmentAndCleanup() {
         for (Place place : places) {
             Iterator<Character> it = place.getCharacterList().iterator();
+            // On retire un personnage si il est mort
             while (it.hasNext()) {
                 Character c = it.next();
                 if (c.isDead()) {
@@ -261,11 +291,14 @@ public class InvasionTheater {
             }
             if (!(place instanceof BattleField) && random.nextInt(100) < 20) {
                 List<Food> loot = stockFoodGenerator.generateInitialStock(1);
-                if(!loot.isEmpty()) place.addFood(loot.get(0));
+                if(!loot.isEmpty()) place.addFood(loot.getFirst());
             }
         }
     }
 
+    /**
+     * Player (User) interaction
+     */
     // --- 4. INTERACTIONS JOUEUR (Chef de Clan) ---
     private void handlePlayerTurn() {
         System.out.println("\n👑 --- MENU CHEF DE CLAN --- 👑");
@@ -289,6 +322,10 @@ public class InvasionTheater {
         managePlace(selectedPlace);
     }
 
+    /**
+     * Place management
+     * @param place
+     */
     private void managePlace(SafePlace place) {
         boolean back = false;
         while (!back) {
@@ -327,6 +364,10 @@ public class InvasionTheater {
         }
     }
 
+    /**
+     * Order druid to brew magic potion
+     * @param place
+     */
     // Commande Chef -> Druide
     private void orderDruidToBrew(SafePlace place) {
         Cauldron cauldron = place.getCauldron();
@@ -352,6 +393,10 @@ public class InvasionTheater {
         }
     }
 
+    /**
+     * Clan chief distribut potion
+     * @param place
+     */
     // Commande Chef -> Troupes
     private void distributePotion(SafePlace place) {
         Cauldron cauldron = place.getCauldron();
@@ -379,6 +424,10 @@ public class InvasionTheater {
         System.out.println(count + " guerriers ont bu la potion !");
     }
 
+    /**
+     * Send character in battlefield
+     * @param source
+     */
     private void sendTroopsMenu(SafePlace source) {
         List<BattleField> battleFields = places.stream()
                 .filter(p -> p instanceof BattleField)
@@ -400,6 +449,11 @@ public class InvasionTheater {
         if (count > 0) source.transferCharacter(count, battleFields.get(bfIndex - 1));
     }
 
+    /**
+     * get Player (User) choose by his input
+     * @param max
+     * @return int
+     */
     private int getIntInput(int max) {
         System.out.print("Choix > ");
         while (!scanner.hasNextInt()) {
@@ -410,6 +464,9 @@ public class InvasionTheater {
         return Math.max(0, Math.min(val, max));
     }
 
+    /**
+     * Check if everybody dead
+     */
     private void checkEndGameConditions() {
         long gaulsAlive = places.stream().flatMap(p -> p.getCharacterList().stream()).filter(c -> c.getFaction() == Faction.GAULS).count();
         long romansAlive = places.stream().flatMap(p -> p.getCharacterList().stream()).filter(c -> c.getFaction() == Faction.ROMAN).count();
