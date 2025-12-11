@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import src.main.java.characters.gaulois.Druid;
 import src.main.java.Enum.character.Faction;
+import src.main.java.characters.romain.Legionnaire;
 import src.main.java.food.Food;
 import src.main.java.Enum.food.FoodType;
 import src.main.java.Enum.food.FoodFreshness;
@@ -13,11 +14,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class CharacterTest {
 
     private Druid panoramix;
+    private Legionnaire caligula;
 
     @BeforeEach
     void setUp() {
         // On recrée un personnage neuf avant chaque test
         panoramix = new Druid("Panoramix", 'M', 170, 50, 10, 10, Faction.GAULS);
+        caligula = new Legionnaire("Caligula Minus", 'M', 130, 25, 20, 60, Faction.ROMAN);
         // On s'assure qu'il n'a pas faim au début (ou qu'il a faim selon votre logique)
         // Disons qu'on lui donne un peu faim pour qu'il puisse manger
         // (Supposons que 0 = a faim, 100 = rassasié, selon votre implémentation Statistics)
@@ -65,7 +68,7 @@ class CharacterTest {
     }
 
     @Test
-    void testMangerPoissonPasFrais() {
+    void testNoEatNotFreshFish() {
         // Scénario : Manger du poisson pas frais est mauvais pour la santé
         panoramix.takeDamage(50); // Blesse le perso pour pouvoir tester la baisse de PV
 
@@ -81,7 +84,7 @@ class CharacterTest {
     }
 
     @Test
-    void testMangerLegumesConsecutifs() {
+    void testEatConsecutiveVegetables() {
         // SETUP : On blesse le personnage (sinon il reste bloqué à 100 PV)
         panoramix.takeDamage(50); // Il tombe à 50 PV
         int santeAvantManger = panoramix.getHealth().get(); // 50
@@ -104,12 +107,12 @@ class CharacterTest {
     }
 
     @Test
-    void testGauloisRefuseNourritureRomaine() {
+    void testGaulsRefuseRomanFood() {
         // Scénario : Les Gaulois ont des préférences alimentaires et refusent ce qui n'est pas "leur" nourriture (sauf les légumes/poisson pas frais)
         int faimInitiale = panoramix.getHunger().get();
         int santeInitiale = panoramix.getHealth().get();
 
-        // Le Miel (HONEY) n'est pas dans la liste 'gaulsFoods' de votre classe Character
+        // Le Miel (HONEY) n'est pas dans la liste 'gaulsFoods' de la classe Character
         Food miel = new Food("Miel", 50, FoodType.HONEY, FoodFreshness.FRESH, FoodCategory.DRINK);
 
         panoramix.eat(miel);
@@ -117,5 +120,19 @@ class CharacterTest {
         // Vérification : Ni la faim, ni la santé ne doivent changer car il refuse de manger
         assertEquals(faimInitiale, panoramix.getHunger().get(), "La faim ne doit pas changer (refus)");
         assertEquals(santeInitiale, panoramix.getHealth().get(), "La santé ne doit pas changer (refus)");
+    }
+
+    @Test
+    void testRomanRefuseGaulsFood() {
+        int faimInitiale = caligula.getHealth().get();
+        int santeInitiale = caligula.getHunger().get();
+
+        // Le Poisson passablement frait n'est pas dans la liste 'romansFood' de la classe Character
+        Food poissonPassablementFrais = new Food("poisson passablement frait", 30, FoodType.FAIRLY_FRESH_FISH, FoodFreshness.FAIRLY_FRESH, FoodCategory.FISH);
+
+        caligula.eat(poissonPassablementFrais);
+
+        assertEquals(faimInitiale, caligula.getHunger().get(), "La faim ne doit pas changer (refus)");
+        assertEquals(santeInitiale, caligula.getHealth().get(), "La santé ne doit pas changer (refus)");
     }
 }

@@ -78,6 +78,7 @@ public class SafePlace extends Place implements ISafePlace {
     public void transferCharacter(int nbCharacter, BattleField battleField) {
         for (int i = 0; i < nbCharacter; i++) {
             battleField.addCharacter(this.getCharacterList().get(i));
+            this.getCharacterList().remove(i);
         }
     }
 
