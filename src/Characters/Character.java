@@ -9,6 +9,7 @@ import src.Interfaces.Character.ICharacterAction;
 import src.Statistics;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class Character implements ICharacterAction {
@@ -28,8 +29,12 @@ public abstract class Character implements ICharacterAction {
     private Statistics belligerence = new Statistics(100, 0, 100); // 0 = pacific, 100 = aggressive
     private Statistics magicPotion = new Statistics(0, 0, 100);
 
-    private final List<FoodType> gaulsFoods = new ArrayList<>();
-    private final List<FoodType> romanFoods = new ArrayList<>();
+    private final List<FoodType> gaulsFoods = Arrays.asList(
+            FoodType.WILD_BOAR, FoodType.WINE, FoodType.FAIRLY_FRESH_FISH
+    );
+    private final List<FoodType> romanFoods = Arrays.asList(
+            FoodType.WILD_BOAR, FoodType.HONEY, FoodType.WINE, FoodType.MEAD
+    );
 
     public Character(String name, char sex, int height, int age, int strength, int stamina, Faction faction) {
         this.name = name;
@@ -39,15 +44,6 @@ public abstract class Character implements ICharacterAction {
         this.strength = strength;
         this.stamina = stamina;
         this.faction = faction;
-
-        gaulsFoods.add(FoodType.WILD_BOAR);
-        gaulsFoods.add(FoodType.WINE);
-        gaulsFoods.add(FoodType.FAIRLY_FRESH_FISH);
-
-        romanFoods.add(FoodType.WILD_BOAR);
-        romanFoods.add(FoodType.HONEY);
-        romanFoods.add(FoodType.WINE);
-        romanFoods.add(FoodType.MEAD);
     }
 
     //--- Getters ---
@@ -116,10 +112,16 @@ public abstract class Character implements ICharacterAction {
             this.hunger.add(hunger_lost_point);
             this.takeDamage(pv_lost);
             System.out.println("Aaah... je ne me sens pas bien...");
-        } else { // Sinon on prend des pv et point de faim
+        } else if (this.faction == Faction.GAULS && !gaulsFoods.contains(food.getFoodType())) {
+            System.out.println("Beurk, cette nourriture est trop raffinée pour de vaillants Gaulois. Je ne mange pas ça.");
+        } else if (this.faction == Faction.ROMAN && !romanFoods.contains(food.getFoodType())) {
+            System.out.println("Beurk, cette nourriture ressemble à ces sale Gaulois. Je ne mange pas de cela.");
+        }
+        else { // Sinon on prend des pv et point de faim
             if (this.faction == Faction.GAULS && gaulsFoods.contains(food.getFoodType())) {
                 hunger_win = food.getFoodNutrition();
-            } else if (this.faction == Faction.ROMAN && romanFoods.contains(food.getFoodType())) {
+            }
+            if (this.faction == Faction.ROMAN && romanFoods.contains(food.getFoodType())) {
                 hunger_win = food.getFoodNutrition();
             }
             System.out.println(this.name + " à mangé " + food.getName() + ". +" + hunger_win + " points de faim et +" + pv_win + " points de vie.");
